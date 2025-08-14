@@ -32,7 +32,7 @@ class Solution {
             Pair start = q.peek();
             int s = q.size();
             Pair end = null;
-            for (int j = 0; j < s; j++) {
+            for (int i = 0; i < s; i++) {
                 end = q.poll();
                 if (end.node.left != null) {
                     q.add(new Pair(end.node.left, 2 * end.idx + 1));
