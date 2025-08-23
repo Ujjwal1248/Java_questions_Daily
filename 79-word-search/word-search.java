@@ -24,16 +24,11 @@ class Solution {
 
         char temp = board[i][j];
         board[i][j] = '*';
-        int[][] directions = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
-        boolean found = false;
-        for (int d = 0; d < 4; d++) {
-            int newRow = i + directions[d][0];
-            int newCol = j + directions[d][1];
-            if (dfs(board, newRow, newCol, word, index + 1)) {
-                found = true;
-                break;
-            }
-        }
+
+        boolean found = dfs(board, i + 1, j, word, index + 1) ||
+                dfs(board, i - 1, j, word, index + 1) ||
+                dfs(board, i, j + 1, word, index + 1) ||
+                dfs(board, i, j - 1, word, index + 1);
         board[i][j] = temp;
         return found;
     }
