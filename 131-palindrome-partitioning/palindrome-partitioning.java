@@ -10,7 +10,7 @@ class Solution {
             ans.add(new ArrayList<>(current));
             return;
         }
-        for(int i = index; i< s.length(); ++i){
+        for(int i = index; i< s.length(); i++){
             if(isPalindrome(s, index, i)){
                 current.add(s.substring(index, i+1));
                 func(i + 1, s,current,ans);
