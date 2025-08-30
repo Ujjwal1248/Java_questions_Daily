@@ -16,6 +16,7 @@ class Solution {
             count = count + (r - l + 1);
             r++;
         }
+        System.gc();
         return count;
     }
 }
