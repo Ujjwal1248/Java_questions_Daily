@@ -14,26 +14,34 @@
  * }
  */
 class Solution {
-    public int diameterOfBinaryTree(TreeNode root) {
-        return diameter(root) - 1;
-    }
-    private static int diameter(TreeNode root) {
-		// TODO Auto-generated method stub
-		if(root == null) return 0;
-		int dia1 = diameter(root.left);
-		int dia2 = diameter(root.right);
-		int dia3 = heightTree(root.left) + heightTree(root.right) + 1;
-		return Math.max(dia2, Math.max(dia1, dia3));
-	}
-
-	private static int heightTree(TreeNode root) {
-		// TODO Auto-generated method stub
-		if (root == null) {
-			return 0;
+    static class TreeInfo{
+		int diam;
+		int ht;
+		public TreeInfo(int diam, int ht) {
+			// TODO Auto-generated constructor stub
+			this.ht = ht;
+			this.diam = diam;
 		}
-		int leftH = heightTree(root.left);
-		int rightH = heightTree(root.right);
-
-		return Math.max(leftH, rightH) + 1;
+	}
+    public int diameterOfBinaryTree(TreeNode root) {
+        return diameter2(root).diam - 1;
+    }
+    private static TreeInfo diameter2(TreeNode root) {
+		if(root == null) return new TreeInfo(0, 0);
+		TreeInfo left = diameter2(root.left);
+		TreeInfo right= diameter2(root.right);
+		
+		int myHeight = Math.max(left.ht, right.ht) + 1;
+		
+		int diam1 = left.diam;
+		int diam2 = right.diam;
+		int diam3 = left.ht + right.ht + 1;
+		
+		int myDiam = Math.max(diam2, Math.max(diam1, diam3));
+		
+		TreeInfo myInfo = new TreeInfo(myDiam, myHeight);
+		
+		return myInfo;
+		
 	}
 }
