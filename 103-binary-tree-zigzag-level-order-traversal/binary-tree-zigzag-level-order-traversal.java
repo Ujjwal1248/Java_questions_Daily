@@ -19,7 +19,7 @@ class Solution {
         if (root == null) return result;
 
         Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
+        queue.add(root);
         boolean leftToRight = true;
 
         while (!queue.isEmpty()) {
