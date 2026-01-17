@@ -1,20 +1,30 @@
 class Solution {
     public int trap(int[] height) {
-        int n = height.length;
-        int[] pge = new int[n];
-        int[] nge = new int[n];
-        pge[0] = height[0];
-        nge[n-1] = height[n-1];
-        for(int i = 1 ; i < n; i ++){
-            pge[i] = Math.max(pge[i-1], height[i]);
+        int lmax = 0;
+        int rmax = 0;
+        int total = 0;
+        int l = 0;
+        int r = height.length - 1;
+        while(l <= r){
+            if(height[l] <= height[r]){
+                if(lmax > height[l]){
+                    total += lmax - height[l];
+                }
+                else{
+                    lmax = height[l];
+                }
+                l++;
+            }
+            else{
+                if(rmax > height[r]){
+                    total += rmax - height[r];
+                }
+                else{
+                    rmax = height[r];
+                }
+                r--;
+            }
         }
-        for(int i = n-2 ; i >=0; i --){
-            nge[i] = Math.max(nge[i+1], height[i]);
-        }
-        int sum = 0;
-        for(int i = 0 ; i< n; i++){
-            sum += Math.min(pge[i], nge[i]) - height[i];
-        }
-        return sum;
+        return total;
     }
 }
