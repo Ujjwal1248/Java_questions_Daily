@@ -1,27 +1,20 @@
 class Solution {
-    public int trap(int[] arr) {
-        int l = 0;
-        int r = arr.length - 1;
-        int lmax = 0;
-        int rmax = 0;
-        int total = 0;
-        while (l < r) {
-            if (arr[l] <= arr[r]) {
-                if (lmax > arr[l]) {
-                    total += lmax - arr[l];
-                } else {
-                    lmax = arr[l];
-                }
-                l++;
-            } else {
-                if (rmax > arr[r]) {
-                    total += rmax - arr[r];
-                } else {
-                    rmax = arr[r];
-                }
-                r--;
-            }
+    public int trap(int[] height) {
+        int n = height.length;
+        int[] pge = new int[n];
+        int[] nge = new int[n];
+        pge[0] = height[0];
+        nge[n-1] = height[n-1];
+        for(int i = 1 ; i < n; i ++){
+            pge[i] = Math.max(pge[i-1], height[i]);
         }
-        return total;
+        for(int i = n-2 ; i >=0; i --){
+            nge[i] = Math.max(nge[i+1], height[i]);
+        }
+        int sum = 0;
+        for(int i = 0 ; i< n; i++){
+            sum += Math.min(pge[i], nge[i]) - height[i];
+        }
+        return sum;
     }
 }
