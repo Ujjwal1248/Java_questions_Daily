@@ -1,29 +1,29 @@
 class Solution {
+    List<List<String>> ans = new ArrayList<>();
+
     public List<List<String>> partition(String s) {
-        List<List<String>> ans = new ArrayList<>();
-        func(0, s, new ArrayList<>(), ans);
+        List<String> temp = new ArrayList<>();
+        solve(s, 0, temp);
         return ans;
     }
 
-    public void func(int index, String s, List<String> current, List<List<String>> ans) {
-        if(index == s.length()){
-            ans.add(new ArrayList<>(current));
+    public void solve(String s,int idx, List<String> temp){
+        if(idx == s.length()){
+            ans.add(new ArrayList<>(temp));
             return;
         }
-        for(int i = index; i< s.length(); i++){
-            if(isPalindrome(s, index, i)){
-                current.add(s.substring(index, i+1));
-                func(i + 1, s,current,ans);
-                current.remove(current.size() - 1);
+        for(int i = idx; i < s.length(); i++){
+            if(isPalindrome(s, idx, i)){
+                temp.add(s.substring(idx,i+1));
+                solve(s, i + 1, temp);
+                temp.remove(temp.size() - 1);
             }
         }
     }
 
-    public boolean isPalindrome(String s, int start, int end) {
-        while (start <= end) {
-            if (s.charAt(start) != s.charAt(end)) {
-                return false;
-            }
+    public boolean isPalindrome(String s, int start, int end){
+        while(start < end){
+            if(s.charAt(start) != s.charAt(end)) return false;
             start++;
             end--;
         }
