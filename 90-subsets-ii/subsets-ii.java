@@ -1,24 +1,24 @@
 class Solution {
+    List<List<Integer>> ans = new ArrayList<>();
+
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         Arrays.sort(nums);
-        List<List<Integer>> ans = new ArrayList<>();
-        generate(0, nums, new ArrayList<>(), ans);
+        List<Integer> temp = new ArrayList<>();
+        solve(nums, 0, temp);
         return ans;
     }
 
-    public void generate(int idx, int[] nums, List<Integer> current, List<List<Integer>> ans) {
-        if (idx == nums.length) {
-            ans.add(new ArrayList<>(current));
-            return;
+    public void solve(int[] nums, int idx, List<Integer> temp) {
+        // if (idx == nums.length) {
+        ans.add(new ArrayList<>(temp));
+        //     return;
+        // }
+        for(int i = idx; i < nums.length; i++){
+            if(i>idx && nums[i] == nums[i-1])continue;
+            temp.add(nums[i]);
+            solve(nums, i + 1, temp);
+            temp.remove(temp.size() - 1);
+            // solve(nums, i + 1, temp);
         }
-        current.add(nums[idx]);
-        generate(idx + 1, nums, current, ans);
-        current.remove(current.size() - 1);
-        int index = idx + 1;
-        while (index < nums.length && nums[index] == nums[index - 1]) {
-            index++;
-        }
-        generate(index, nums, current, ans);
-
     }
 }
