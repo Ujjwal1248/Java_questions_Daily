@@ -6,13 +6,15 @@ class Solution {
         return ans;
     }
     public void solve(int[] nums, int idx, List<Integer> temp){
-        if(idx == nums.length){
-            ans.add(new ArrayList<>(temp));
-            return;
+        // if(idx == nums.length){
+        ans.add(new ArrayList<>(temp));
+        //     return;
+        // }
+        for(int i = idx; i< nums.length; i++){
+            temp.add(nums[i]);
+            solve(nums, i + 1, temp);
+            temp.remove(temp.size() - 1);
         }
-        temp.add(nums[idx]);
-        solve(nums, idx + 1, temp);
-        temp.remove(temp.size() - 1);
-        solve(nums, idx + 1, temp);
+        // solve(nums, idx + 1, temp);
     }
 }
