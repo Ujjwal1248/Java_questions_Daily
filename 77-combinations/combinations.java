@@ -11,9 +11,9 @@ class Solution {
             return;
         }
         if(idx > n) return;
-        solve(n, k, idx + 1, temp);
         temp.add(idx);
         solve(n, k-1, idx + 1, temp);
         temp.remove(temp.size() - 1);
+        solve(n, k, idx + 1, temp);
     }
 }
