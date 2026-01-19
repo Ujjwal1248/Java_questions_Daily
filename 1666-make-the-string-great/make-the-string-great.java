@@ -1,18 +1,25 @@
 class Solution {
     public String makeGood(String s) {
         Stack<Character> st = new Stack<>();
-        for (char c : s.toCharArray()) {
-            if (!st.isEmpty() && Math.abs(c - st.peek()) == 32) {
-                st.pop();
-            } else {
-                st.push(c);
+        for(int i = 0; i < s.length(); i++){
+            char ch = s.charAt(i);
+            if(st.isEmpty()){
+                st.push(ch);
+            }
+            else{
+                char top = st.peek();
+                if(ch == top || Character.toLowerCase(top) != Character.toLowerCase(ch)){
+                    st.push(ch);
+                }
+                else{
+                    st.pop();
+                }
             }
         }
-        StringBuilder result = new StringBuilder();
-        while (!st.isEmpty()) {
-            result.insert(0, st.pop());
+        String ans = "";
+        while(!st.isEmpty()){
+            ans = st.pop()+ans;
         }
-        
-        return result.toString();
+        return ans;
     }
 }
