@@ -7,7 +7,7 @@ class Solution {
     }
 
     public void helper(int n, int open, int close, String curr) {
-        if (curr.length() == 2 * n) {
+        if (open+close == 2 * n) {
             ans.add(curr);
             return;
         }
