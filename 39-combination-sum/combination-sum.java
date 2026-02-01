@@ -15,7 +15,7 @@ class Solution {
         if (target < 0 || idx == nums.length)
             return;
         temp.add(nums[idx]);
-        helper(nums, target - nums[idx], idx, temp); //(idx+ 1) because Same number can be used multiple times
+        helper(nums, target - nums[idx], idx, temp); //(idx) because Same number can be used multiple times
         temp.removeLast();
         helper(nums, target, idx + 1, temp); //
     }
