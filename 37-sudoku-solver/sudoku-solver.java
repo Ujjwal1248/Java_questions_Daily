@@ -32,8 +32,8 @@ class Solution {
             if (board[row][i] == ch || board[i][col] == ch)
                 return false;
         }
-        int r = row - row % 3;
-        int c = col - col % 3;
+        int r = (row / 3)*3;
+        int c = (col / 3)*3;
 
         for (int i = r; i < r + 3; i++) {
             for (int j = c; j < c + 3; j++) {
