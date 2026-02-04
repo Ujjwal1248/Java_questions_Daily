@@ -10,14 +10,30 @@
  */
 class Solution {
     public ListNode doubleIt(ListNode head) {
-        ListNode dummy = head;
-        ListNode dummy2 =reverse(dummy);
-        ListNode dummy3 = helper(dummy2);
-        return reverse(dummy3);
+        ListNode rev = reverse(head);
+        ListNode h1 = helper(rev);
+        return reverse(h1);
+    }
+    public ListNode helper(ListNode head){
+        ListNode curr = head;
+        ListNode prev = null;
+        int carry = 0;
+        while(curr != null){
+            int value = carry + (curr.val * 2);
+            int sum = value % 10;
+            curr.val = sum;
+            carry = value / 10;
+            prev = curr;
+            curr = curr.next;
+        }
+        if(carry > 0){
+            prev.next = new ListNode(carry);
+        }
+        return head;
     }
     public ListNode reverse(ListNode head){
-        ListNode curr = head;
-        ListNode prev= null;
+        ListNode curr= head;
+        ListNode prev = null;
         while(curr != null){
             ListNode next = curr.next;
             curr.next = prev;
@@ -25,23 +41,5 @@ class Solution {
             curr = next;
         }
         return prev;
-    }
-    public ListNode helper(ListNode head){
-        int carry = 0;
-        ListNode dummy = new ListNode(0);
-        ListNode curr= dummy;
-        while(head != null || carry !=0){
-            int sum = carry;
-            if(head!=null){
-                sum = sum + 2*head.val;
-                head = head.next;
-            }
-            carry = sum / 10;
-            sum = sum %10;
-            curr.next = new ListNode(sum);
-            curr = curr.next;
-        }
-        return dummy.next;
-
     }
 }
