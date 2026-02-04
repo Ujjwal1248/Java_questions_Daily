@@ -11,41 +11,49 @@
 class Solution {
     public int[] nextLargerNodes(ListNode head) {
         ListNode dummy = head;
-        ListNode dummy2 = reverse(dummy);
-        return helper(dummy2);
-    }
+        int n = size(dummy);
+        int j = 0;
+        int[] nums = new int[n];
+        int[] ans = new int[n];
+        while (dummy != null) {
+            nums[j] = dummy.val;
+            j++;
+            dummy = dummy.next;
+        }
 
-    public int[] helper(ListNode head) {
         Stack<Integer> st = new Stack<>();
-        ArrayList<Integer> arr = new ArrayList<>();
-        while (head != null) {
-            while (!st.isEmpty() && st.peek() <= head.val) {
+        for (int i = n - 1; i >= 0; i--) {
+            while (!st.isEmpty() && st.peek() <= nums[i]) {
                 st.pop();
             }
-            if (st.isEmpty())
-                arr.add(0);
-            else
-                arr.add(st.peek());
-            st.push(head.val);
-            head = head.next;
-        }
-        int n = arr.size();
-        int[] ans = new int[n];
-        for (int i = 0; i < n; i++) {
-            ans[i] = arr.get(n - 1 - i);
+            if (st.isEmpty()) {
+                ans[i] = 0;
+            } else
+                ans[i] = st.peek();
+            st.push(nums[i]);
         }
         return ans;
     }
 
-    public ListNode reverse(ListNode head) {
+    public int size(ListNode head) {
         ListNode curr = head;
-        ListNode prev = null;
+        int s = 0;
         while (curr != null) {
-            ListNode next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
+            s++;
+            curr = curr.next;
         }
-        return prev;
+        return s;
     }
+
+    // public ListNode reverse(ListNode head) {
+    //     ListNode prev = null;
+    //     ListNode curr = head;
+    //     while (curr != null) {
+    //         ListNode next = curr.next;
+    //         curr.next = prev;
+    //         prev = curr;
+    //         curr = next;
+    //     }
+    //     return prev;
+    // }
 }
