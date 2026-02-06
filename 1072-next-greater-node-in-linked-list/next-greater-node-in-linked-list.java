@@ -10,50 +10,30 @@
  */
 class Solution {
     public int[] nextLargerNodes(ListNode head) {
-        ListNode dummy = head;
-        int n = size(dummy);
-        int j = 0;
-        int[] nums = new int[n];
-        int[] ans = new int[n];
-        while (dummy != null) {
-            nums[j] = dummy.val;
-            j++;
-            dummy = dummy.next;
+        ListNode curr = head;
+        int n = 0;
+        while (curr != null) {
+            curr = curr.next;
+            n++;
         }
-
+        int[] nums = new int[n];
+        ListNode curr1 = head;
+        int i = 0;
+        while (curr1 != null) {
+            nums[i] = curr1.val;
+            curr1 = curr1.next;
+            i++;
+        }
         Stack<Integer> st = new Stack<>();
-        for (int i = n - 1; i >= 0; i--) {
-            while (!st.isEmpty() && st.peek() <= nums[i]) {
+        int[] ans = new int[n];
+        for (int j = n - 1; j >= 0; j--) {
+            while (!st.isEmpty() && st.peek() <= nums[j]) {
                 st.pop();
             }
-            if (st.isEmpty()) {
-                ans[i] = 0;
-            } else
-                ans[i] = st.peek();
-            st.push(nums[i]);
+            if(st.isEmpty()) ans[j] = 0;
+            else ans[j] = st.peek();
+            st.push(nums[j]);
         }
         return ans;
     }
-
-    public int size(ListNode head) {
-        ListNode curr = head;
-        int s = 0;
-        while (curr != null) {
-            s++;
-            curr = curr.next;
-        }
-        return s;
-    }
-
-    // public ListNode reverse(ListNode head) {
-    //     ListNode prev = null;
-    //     ListNode curr = head;
-    //     while (curr != null) {
-    //         ListNode next = curr.next;
-    //         curr.next = prev;
-    //         prev = curr;
-    //         curr = next;
-    //     }
-    //     return prev;
-    // }
 }
