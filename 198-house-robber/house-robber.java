@@ -6,7 +6,6 @@ class Solution {
         return helper(nums, 0, memo);
     }
     public int helper(int[] nums, int i, int[] memo){
-        //if(i == nums.length - 1) return nums[i]; 
         if(i >= nums.length) return 0;
         if(memo[i] != -1) return memo[i];
         int res1 = nums[i] + helper(nums, i+2, memo);
