@@ -18,19 +18,21 @@ class Solution {
         if(root == null) return 0;
         return helper(root);
     }
-    public static int helper(TreeNode node){
+    public int helper(TreeNode root) {
         Queue<TreeNode> q = new LinkedList<>();
-        q.add(node);
-        int length = 0;
+        int count = 0;
+        q.add(root);
         while(!q.isEmpty()){
             int n = q.size();
+            count++;
             for(int i = 0; i < n; i++){
-                TreeNode root = q.poll();
-                if(root.left != null) q.add(root.left);
-                if(root.right != null) q.add(root.right);
+                TreeNode curr = q.poll();
+                if(curr.left != null) q.add(curr.left);
+                if(curr.right != null) q.add(curr.right);
+                // count++;
             }
-            length++;
+            // q.remove();
         }
-        return length;
+        return count;
     }
 }
