@@ -16,23 +16,27 @@
 class Solution {
     public int maxDepth(TreeNode root) {
         if(root == null) return 0;
-        return helper(root);
+        return helper(root, 0);
     }
-    public int helper(TreeNode root) {
-        Queue<TreeNode> q = new LinkedList<>();
-        int count = 0;
-        q.add(root);
-        while(!q.isEmpty()){
-            int n = q.size();
-            count++;
-            for(int i = 0; i < n; i++){
-                TreeNode curr = q.poll();
-                if(curr.left != null) q.add(curr.left);
-                if(curr.right != null) q.add(curr.right);
-                // count++;
-            }
-            // q.remove();
-        }
-        return count;
+    // public int helper(TreeNode root) {
+    //     Queue<TreeNode> q = new LinkedList<>();
+    //     int count = 0;
+    //     q.add(root);
+    //     while(!q.isEmpty()){
+    //         int n = q.size();
+    //         count++;
+    //         for(int i = 0; i < n; i++){
+    //             TreeNode curr = q.poll();
+    //             if(curr.left != null) q.add(curr.left);
+    //             if(curr.right != null) q.add(curr.right);
+    //         }
+    //     }
+    //     return count;
+    // }
+    public int helper(TreeNode root, int depth) {
+        if(root == null) return 0;
+        int left = helper(root.left, depth);
+        int right = helper(root.right, depth);
+        return Math.max(left, right) + 1;
     }
 }
