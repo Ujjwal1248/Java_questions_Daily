@@ -14,34 +14,30 @@
  * }
  */
 class Solution {
-    static class TreeInfo{
-		int diam;
-		int ht;
-		public TreeInfo(int diam, int ht) {
-			// TODO Auto-generated constructor stub
-			this.ht = ht;
-			this.diam = diam;
-		}
-	}
+    // public class DiaPair{
+    //     TreeNode left, right;
+    //     int ht;
+    // }
+    public int maxH = 0;
     public int diameterOfBinaryTree(TreeNode root) {
-        return diameter2(root).diam - 1;
+        helper(root);
+        return maxH;
     }
-    private static TreeInfo diameter2(TreeNode root) {
-		if(root == null) return new TreeInfo(0, 0);
-		TreeInfo left = diameter2(root.left);
-		TreeInfo right= diameter2(root.right);
-		
-		int myHeight = Math.max(left.ht, right.ht) + 1;
-		
-		int diam1 = left.diam;
-		int diam2 = right.diam;
-		int diam3 = left.ht + right.ht + 1;
-		
-		int myDiam = Math.max(diam2, Math.max(diam1, diam3));
-		
-		TreeInfo myInfo = new TreeInfo(myDiam, myHeight);
-		
-		return myInfo;
-		
-	}
+    // public void helper1(TreeNode root) {
+    //     if(root == null) return;
+    //     int left = helper(root.left);
+    //     int right = helper(root.right);
+    //     maxH = Math.max(maxH, left + right);
+    //     helper1(root.left);
+    //     helper1(root.right);
+    // }
+
+    public int helper(TreeNode root) {
+        if(root == null) return 0;
+        int left = helper(root.left);
+        int right = helper(root.right);
+        maxH = Math.max(maxH, left + right);
+        return Math.max(left, right) + 1;
+    }
+
 }
