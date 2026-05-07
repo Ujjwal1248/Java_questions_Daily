@@ -15,18 +15,20 @@
  */
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> ans = new ArrayList<>();
-        helper(root, 1, ans);
-        return ans;
+        List<Integer> ll = new ArrayList<>();
+        if(root == null) return ll;
+        ll.add(root.val);
+        helper(root, 0, ll);
+        return ll;
     }
-    public int maxdepth = 0;
-    public void helper(TreeNode root, int curr, List<Integer> ans) {
+    public int maxH = 0;
+    public void helper(TreeNode root, int currH, List<Integer> ll) {
         if(root == null) return;
-        if(maxdepth < curr){
-            ans.add(root.val);
-            maxdepth = curr;
+        if(currH > maxH){
+            ll.add(root.val);
+            maxH = currH;
         }
-        helper(root.right, curr + 1, ans);
-        helper(root.left, curr + 1, ans);
+        helper(root.right, currH + 1, ll);
+        helper(root.left, currH + 1, ll);
     }
 }
