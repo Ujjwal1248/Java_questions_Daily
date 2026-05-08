@@ -14,30 +14,16 @@
  * }
  */
 class Solution {
-    // public class DiaPair{
-    //     TreeNode left, right;
-    //     int ht;
-    // }
-    public int maxH = 0;
+    public int maxHeight = 0;
     public int diameterOfBinaryTree(TreeNode root) {
-        helper(root);
-        return maxH;
+        diameter(root);
+        return maxHeight;
     }
-    // public void helper1(TreeNode root) {
-    //     if(root == null) return;
-    //     int left = helper(root.left);
-    //     int right = helper(root.right);
-    //     maxH = Math.max(maxH, left + right);
-    //     helper1(root.left);
-    //     helper1(root.right);
-    // }
-
-    public int helper(TreeNode root) {
+    private int diameter(TreeNode root) {
         if(root == null) return 0;
-        int left = helper(root.left);
-        int right = helper(root.right);
-        maxH = Math.max(maxH, left + right);
+        int left = diameter(root.left);
+        int right = diameter(root.right);
+        maxHeight = Math.max(maxHeight, left + right);
         return Math.max(left, right) + 1;
     }
-
 }
