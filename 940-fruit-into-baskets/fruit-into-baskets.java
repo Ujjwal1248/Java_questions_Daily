@@ -1,9 +1,9 @@
 class Solution {
     public int totalFruit(int[] nums) {
-        int l = 0, r = 0, maxLen = 0;
-        Map<Integer, Integer> map = new HashMap<>();
-
-        while (r < nums.length) {
+        int l = 0, r = 0, n = nums.length;
+        int max = Integer.MIN_VALUE;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        while (r < n) {
             map.put(nums[r], map.getOrDefault(nums[r], 0) + 1);
             while (map.size() > 2) {
                 map.put(nums[l], map.get(nums[l]) - 1);
@@ -12,10 +12,9 @@ class Solution {
                 }
                 l++;
             }
-            maxLen = Math.max(maxLen, r - l + 1);
+            max = Math.max(max, r-l+1);
             r++;
         }
-
-        return maxLen;
+        return max;
     }
 }
