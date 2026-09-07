@@ -6,8 +6,8 @@ class Solution {
     }
 
     public int helper(int[][] nums, int m, int n, int i, int j, Integer[][] dp) {
-        if (i >= n || j >= m)
-            return Integer.MAX_VALUE;
+        // if (i >= n || j >= m)
+        //     return Integer.MAX_VALUE;
         if (i == n - 1 && j == m - 1) {
             return nums[i][j];
         }
