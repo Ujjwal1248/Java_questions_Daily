@@ -1,24 +1,26 @@
 class Solution {
-    public int uniquePathsWithObstacles(int[][] matrix) {
-        int m = matrix.length;
-        int n = matrix[0].length;
-        if(matrix[m-1][n-1] == 1) return 0;
-        int[][] dp = new int[m + 1][n + 1];
-        for (int i = 0; i < m; i++) {
-            Arrays.fill(dp[i], -1);
-        }
-        return helper(m, n, 0, 0, dp, matrix);
-
+    public int uniquePathsWithObstacles(int[][] nums) {
+        int n = nums.length, m = nums[0].length;
+        if(nums[n-1][m-1] == 1) return 0;
+        Integer[][] dp = new Integer[n + 1][m + 1];
+        return helper(nums, m, n, 0, 0, dp);
     }
 
-    public static int helper(int m, int n, int i, int j, int[][] dp, int[][] matrix) {
-        if (i == m - 1 && j == n - 1) {
+    public int helper(int[][] nums, int m, int n, int i, int j, Integer[][] dp) {
+        if (i == n - 1 && j == m - 1) {
             return 1;
         }
-        if (dp[i][j] != -1)
-            return dp[i][j];
-        if (i >= m || j >= n || matrix[i][j] == 1)
+        if (i >= n || j >= m)
             return 0;
-        return dp[i][j] = helper(m, n, i + 1, j, dp, matrix) + helper(m, n, i, j + 1, dp, matrix);
+        if (dp[i][j] != null)
+            return dp[i][j];
+        int right = 0, down = 0;
+        if (i < n && nums[i][j] != 1) {
+            right = helper(nums, m, n, i + 1, j, dp);
+        }
+        if (j < m && nums[i][j] != 1) {
+            down = helper(nums, m, n, i, j + 1, dp);
+        }
+        return dp[i][j] = right + down;
     }
 }
