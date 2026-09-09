@@ -1,23 +1,50 @@
 class Solution {
-    public int largestRectangleArea(int[] arr) {
-        int n = arr.length;
-        int maxArea = 0;
+    public int largestRectangleArea(int[] nums) {
+        int[] nse = nextSmaller(nums);
+        int[] pse = prevSmaller(nums);
+        int maxH = nums[0];
+        for(int i = 0; i < nums.length; i++){
+            int left = (i - (pse[i] + 1)) * nums[i];
+            int right = (nse[i] - i) * nums[i];
+            maxH = Math.max(maxH, left+right);
+        }
+        return maxH;
+    }
+    public int[] prevSmaller(int[] nums) {
+        int n = nums.length;
+        int[] res = new int[n];
         Stack<Integer> st = new Stack<>();
+
         for (int i = 0; i < n; i++) {
-            while (!st.isEmpty() && arr[i] < arr[st.peek()]) {
-                int nse = i;
-                int element = st.pop();
-                int pse = st.isEmpty() ? -1 : st.peek();
-                maxArea = Math.max(maxArea, arr[element] * (nse - pse - 1));
+
+            while (!st.isEmpty() && nums[st.peek()] >= nums[i]) {
+                st.pop();
             }
+
+            res[i] = st.isEmpty() ? -1 : st.peek();
+
             st.push(i);
         }
-        while (!st.isEmpty()) {
-            int nse = n;
-            int element = st.pop();
-            int pse = st.isEmpty() ? -1 : st.peek();
-            maxArea = Math.max(maxArea, arr[element] * (nse - pse - 1));
+
+        return res;
+    }
+
+    public int[] nextSmaller(int[] nums) {
+        int n = nums.length;
+        int[] res = new int[n];
+        Stack<Integer> st = new Stack<>();
+
+        for (int i = n - 1; i >= 0; i--) {
+
+            while (!st.isEmpty() && nums[st.peek()] >= nums[i]) {
+                st.pop();
+            }
+
+            res[i] = st.isEmpty() ? n : st.peek();
+
+            st.push(i);
         }
-        return maxArea;
+
+        return res;
     }
 }
