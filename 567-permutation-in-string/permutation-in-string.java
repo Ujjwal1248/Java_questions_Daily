@@ -1,20 +1,20 @@
 class Solution {
-    public boolean checkInclusion(String s1, String s2) {
-        int[] arr1 = new int[26];
-        int[] arr2 = new int[26];
-        if(s2.length() < s1.length()) return false;
-        for (int i = 0; i < s1.length(); i++) {
-            arr1[s1.charAt(i) - 'a']++;
-            arr2[s2.charAt(i) - 'a']++;
+    public boolean checkInclusion(String p, String s) {
+        if (p.length() > s.length())
+            return false;
+        int[] freqS = new int[26];
+        int[] freqP = new int[26];
+        for (int i = 0; i < p.length(); i++) {
+            freqS[s.charAt(i) - 'a']++;
+            freqP[p.charAt(i) - 'a']++;
         }
-        if (Arrays.equals(arr1, arr2))
+        if (Arrays.equals(freqS, freqP)) {
             return true;
-
-        for (int i = s1.length(); i < s2.length(); i++) {
-            arr2[s2.charAt(i) - 'a']++;
-            arr2[s2.charAt(i - s1.length()) - 'a']--;
-            if (Arrays.equals(arr1, arr2))
-                return true;
+        }
+        for (int i = p.length(); i < s.length(); i++) {
+            freqS[s.charAt(i) - 'a']++;
+            freqS[s.charAt(i - p.length()) - 'a']--;
+            if (Arrays.equals(freqS, freqP)) return true;
         }
         return false;
     }
