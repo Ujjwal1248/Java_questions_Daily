@@ -4,15 +4,12 @@ class Solution {
         Arrays.sort(s);
         int i = 0, j = 0;
         int count = 0;
-        while(i < g.length && j < s.length){
-            if(s[j] >= g[i]){
-                i++;
-                j++;
+        while (i < g.length && j < s.length) {
+            if (g[i] <= s[j]) {
                 count++;
+                i++;
             }
-            else{
-                j++;
-            }
+            j++;
         }
         return count;
     }
