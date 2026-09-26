@@ -1,44 +1,30 @@
 class Solution {
     public void nextPermutation(int[] nums) {
-        int idx1 = -1;
-        int idx2 = -1;
+        // Left <-- Right
+        // 1.  num[i] > nums[i+1]
+        // 2.  num[j] > num[i]
+        // 3.  swap(num[i], num[j])
+        // 4.  reverse(num, i+1, n-1)
+
         int n = nums.length;
-        for(int i = n-2; i >=0; i--){
-            if(nums[i] < nums[i+1]){
-                idx1 = i;
-                break;
-            }
-        }
-        if(idx1 == -1){
-            reverse(nums, 0);
+        int i = n-2;
+        while(i >= 0 && nums[i] >= nums[i+1]) i--;
+        if(i == -1){
+            reverse(nums,0,n-1);
             return;
         }
-        for(int i = n-1; i >= 0; i--){
-            if(nums[i] > nums[idx1]){
-                idx2 = i;
-                break;
-            }
-        }
-        if(idx2 == -1){
-            reverse(nums, 0);
-            return;
-        }
-        swap(nums, idx1, idx2);
-        reverse(nums, idx1 + 1);
+        int j = n-1;
+        while(j >=i && nums[i] >= nums[j]) j--;
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+        reverse(nums, i+ 1, n-1);
     }
-    public void swap(int[] nums, int idx1, int idx2) {
-        int temp = nums[idx1];
-        nums[idx1] = nums[idx2];
-        nums[idx2] = temp;
-    }
-    public void reverse(int[] nums, int s){
-        int e = nums.length - 1;
-        while(s < e){
-            int temp = nums[s];
-            nums[s] = nums[e];
-            nums[e] = temp;
-            s++;
-            e--;
+    public void reverse(int[] nums, int i, int j) {
+        while(i < j){
+            int temp = nums[i];
+            nums[i++] = nums[j];
+            nums[j--] = temp;
         }
     }
 }
