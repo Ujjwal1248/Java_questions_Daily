@@ -1,35 +1,33 @@
 class Solution {
-    List<List<String>> ans = new ArrayList<>();
-
     public List<List<String>> solveNQueens(int n) {
         char[][] board = new char[n][n];
         for (int i = 0; i < n; i++) {
             Arrays.fill(board[i], '.');
         }
-        helper(board, 0, n);
+        List<List<String>> ans = new ArrayList<>();
+        helper(board, n, 0, ans);
         return ans;
     }
 
-    public void helper(char[][] board, int row, int n) {
+    public void helper(char[][] board, int n, int row, List<List<String>> ans) {
         if (row == n) {
-            List<String> temp = new ArrayList<>();
-            for (char[] a : board) {
-                temp.add(new String(a));
+            List<String> curr = new ArrayList<>();
+            for (char[] ch : board) {
+                curr.add(new String(ch));
             }
-            ans.add(temp);
+            ans.add(curr);
             return;
         }
-
         for (int i = 0; i < n; i++) {
-            if (isSafe(board, row, i, n)) {
+            if (canPlace(board, n, row, i)) {
                 board[row][i] = 'Q';
-                helper(board, row + 1, n);
+                helper(board, n, row + 1, ans);
                 board[row][i] = '.';
             }
         }
     }
 
-    public boolean isSafe(char[][] board, int row, int col, int n) {
+    public boolean canPlace(char[][] board, int n, int row, int col) {
         for (int i = 0; i < row; i++) {
             if (board[i][col] == 'Q')
                 return false;
