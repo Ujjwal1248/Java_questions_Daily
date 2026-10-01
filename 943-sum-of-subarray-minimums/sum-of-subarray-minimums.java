@@ -4,37 +4,28 @@ class Solution {
         int[] nse = new int[n];
         int[] pse = new int[n];
         Stack<Integer> st = new Stack<>();
-
-        for(int i = 0; i <= n-1; i++){
-            while(!st.isEmpty() && arr[i] < arr[st.peek()]){
-                st.pop();
-            }
+        //PSE
+        for(int i = 0; i < n; i++){
+            while(!st.isEmpty() && arr[i] < arr[st.peek()]) st.pop();
             if(st.isEmpty()) pse[i] = -1;
             else pse[i] = st.peek();
             st.push(i);
         }
-
         st.clear();
-
+        //NSE
         for(int i = n-1; i >= 0; i--){
-            while(!st.isEmpty() && arr[i] <= arr[st.peek()]){
-                st.pop();
-            }
+            while(!st.isEmpty() && arr[i] <= arr[st.peek()]) st.pop();
             if(st.isEmpty()) nse[i] = n;
             else nse[i] = st.peek();
             st.push(i);
         }
-
-        long sum = 0;
-        int mod = 1000000000 + 7;
-
+        long total = 0;
+        int MOD = 1000000007;
         for(int i = 0; i < n; i++){
-            long left = i - nse[i];
-            long right = pse[i] - i;
-            long total = left * right *arr[i];
-            sum = (sum + total) % mod;
+            int prev = i - pse[i];
+            int next = nse[i] - i;
+            total = (total + (long)arr[i] * prev * next) % MOD;
         }
-
-        return (int) sum;
+        return (int)total;
     }
 }
