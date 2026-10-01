@@ -1,50 +1,44 @@
 class Solution {
-    public int largestRectangleArea(int[] nums) {
-        int[] nse = nextSmaller(nums);
-        int[] pse = prevSmaller(nums);
-        int maxH = nums[0];
-        for(int i = 0; i < nums.length; i++){
-            int left = (i - (pse[i] + 1)) * nums[i];
-            int right = (nse[i] - i) * nums[i];
-            maxH = Math.max(maxH, left+right);
+    public int largestRectangleArea(int[] heights) {
+        int[] nse = nese(heights);
+        int[] pse = pese(heights);
+        int maxArea = 0;
+        for(int i = 0; i < heights.length; i++){
+            int curr = nse[i] - pse[i] - 1;
+            maxArea = Math.max(maxArea, curr * heights[i]);
         }
-        return maxH;
+        return maxArea;
     }
-    public int[] prevSmaller(int[] nums) {
-        int n = nums.length;
-        int[] res = new int[n];
+
+    public int[] pese(int[] nums) {
+        int[] pse = new int[nums.length];
         Stack<Integer> st = new Stack<>();
-
-        for (int i = 0; i < n; i++) {
-
+        for (int i = 0; i < nums.length; i++) {
             while (!st.isEmpty() && nums[st.peek()] >= nums[i]) {
                 st.pop();
             }
-
-            res[i] = st.isEmpty() ? -1 : st.peek();
-
+            if (st.isEmpty())
+                pse[i] = -1;
+            else
+                pse[i] = st.peek();
             st.push(i);
         }
-
-        return res;
+        return pse;
     }
 
-    public int[] nextSmaller(int[] nums) {
-        int n = nums.length;
-        int[] res = new int[n];
+    public int[] nese(int[] nums) {
+        int[] nse = new int[nums.length];
         Stack<Integer> st = new Stack<>();
-
-        for (int i = n - 1; i >= 0; i--) {
-
+        for (int i = nums.length-1; i >= 0; i--) {
             while (!st.isEmpty() && nums[st.peek()] >= nums[i]) {
                 st.pop();
             }
-
-            res[i] = st.isEmpty() ? n : st.peek();
-
+            if (st.isEmpty())
+                nse[i] = nums.length;
+            else
+                nse[i] = st.peek();
             st.push(i);
         }
-
-        return res;
+        return nse;
     }
 }
