@@ -1,25 +1,20 @@
 class Solution {
-    // public static int cnt = Integer.MAX_VALUE;
     public int coinChange(int[] coins, int amount) {
-        int[] dp = new int[amount + 1];
-        Arrays.fill(dp, -1);
-        int ans = helper(coins, amount, dp);
-        if(ans == Integer.MAX_VALUE) return -1;
-        return ans;
+        Integer[][] dp = new Integer[coins.length + 1][amount + 1];
+        int ans = helper(coins, amount, 0, dp);
+        return (ans == Integer.MAX_VALUE) ? -1 : ans;
     }
-    public int helper(int[] nums, int target, int[] dp) {
-        if (target < 0)
-            return Integer.MAX_VALUE;
-        if (target == 0){ 
-            return 0;
-        }
-        if(dp[target] != -1) return dp[target];
+    public int helper(int[] coins, int amount, int idx, Integer[][] dp) {
+        if(idx >= coins.length || amount < 0) return Integer.MAX_VALUE;
+        if(amount == 0) return 0;
+        if(dp[idx][amount] != null) return dp[idx][amount];
 
-        int min = Integer.MAX_VALUE;
-        for (int i = 0; i < nums.length; i++) {
-            min = Math.min(min, helper(nums, target - nums[i], dp));
+        int pick = Integer.MAX_VALUE;
+        if(amount >= coins[idx]){
+            int res = helper(coins, amount - coins[idx], idx, dp);
+            pick = (res != Integer.MAX_VALUE) ? 1 + res : Integer.MAX_VALUE;
         }
-        if(min == Integer.MAX_VALUE) return dp[target] = Integer.MAX_VALUE;
-        return dp[target] = min + 1;
+        int notPick = helper(coins, amount, idx+1, dp);
+        return dp[idx][amount] =Math.min(pick, notPick);
     }
 }
