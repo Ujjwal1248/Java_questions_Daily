@@ -1,18 +1,19 @@
 class Solution {
     public int lengthOfLIS(int[] nums) {
-        return LIS(nums);
+        Integer[][] dp = new Integer[nums.length][nums.length + 1];
+        return helper(nums, 0, -1, dp);
     }
-    public int LIS(int[] nums) {
-        int[] dp = new int[nums.length];
-        Arrays.fill(dp,1);
-        for(int i = 1; i < dp.length; i++){
-            for(int j = i-1; j >= 0; j--){
-                if(nums[i] > nums[j]){
-                    int x = dp[j];
-                    dp[i] = Math.max(dp[i], x+1);
-                }
-            }
+
+    public int helper(int[] nums, int idx, int prev, Integer[][] dp) {
+        if (idx == nums.length)
+            return 0;
+        if (dp[idx][prev + 1] != null)
+            return dp[idx][prev + 1];
+        int notPick = helper(nums, idx + 1, prev, dp);
+        int pick = 0;
+        if (prev == -1 || nums[idx] > nums[prev]) {
+            pick = 1 + helper(nums, idx + 1, idx, dp);
         }
-        return Arrays.stream(dp).max().getAsInt();
+        return dp[idx][prev + 1] = Math.max(pick, notPick);
     }
 }
